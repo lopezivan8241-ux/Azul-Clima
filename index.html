@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azul Clima - Solicitud de Servicio</title>
+    <!-- Tailwind CSS para un diseño limpio y moderno -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- Encabezado -->
+    <header class="bg-blue-600 text-white shadow-md p-4 text-center">
+        <h1 class="text-2xl font-bold tracking-wide"><i class="fa-solid fa-snowflake mr-2 animate-spin-slow"></i>Azul Clima</h1>
+        <p class="text-sm text-blue-100">Sistema de Climatización Integral</p>
+    </header>
+
+    <!-- Contenedor Principal / Formulario por Pasos (Stepper) -->
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="bg-white shadow-xl rounded-2xl w-full max-w-lg p-6 md:p-8">
+            
+            <!-- Indicador de Pasos -->
+            <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
+                <div id="step-badge" class="bg-blue-100 text-blue-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                    Paso 1 de 4
+                </div>
+                <div class="text-gray-400 text-sm font-semibold" id="step-title">Solicitud</div>
+            </div>
+
+            <!-- Formulario -->
+            <form id="form-solicitud" onsubmit="event.preventDefault();">
+                
+                <!-- PASO 1: Tipo de Trabajo -->
+                <div id="paso-1" class="step-content">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">¿Qué tipo de trabajo necesitas solicitar?</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-start p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-blue-50 transition">
+                            <input type="radio" name="tipo_trabajo" value="Mantenimiento Preventivo" checked class="mt-1 mr-3 h-4 w-4 text-blue-600">
+                            <div>
+                                <span class="font-semibold text-gray-700 block">Mantenimiento Preventivo</span>
+                                <span class="text-xs text-gray-500">Limpieza de quemadores, purgado, control de presión y puesta a punto de temporada.</span>
+                            </div>
+                        </label>
+                        <label class="flex items-start p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-blue-50 transition">
+                            <input type="radio" name="tipo_trabajo" value="Reparación por Falla" class="mt-1 mr-3 h-4 w-4 text-blue-600">
+                            <div>
+                                <span class="font-semibold text-gray-700 block">Reparación por Falla / Urgencia</span>
+                                <span class="text-xs text-gray-500">Falta de chispa, pérdida de agua/presión, piloto se apaga o ruidos.</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- PASO 2: Tipo de Equipo -->
+                <div id="paso-2" class="step-content hidden">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">¿Qué equipo requiere asistencia?</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-blue-50 transition">
+                            <input type="radio" name="tipo_equipo" value="Caldera Mural" checked class="mr-3 h-4 w-4 text-blue-600">
+                            <span class="font-semibold text-gray-700">Caldera Mural (Agua caliente / Calefacción)</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-blue-50 transition">
+                            <input type="radio" name="tipo_equipo" value="Radiadores o Piso Radiante" class="mr-3 h-4 w-4 text-blue-600">
+                            <span class="font-semibold text-gray-700">Radiadores o Piso Radiante</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-200 rounded-xl cursor-pointer hover:bg-blue-50 transition">
+                            <input type="radio" name="tipo_equipo" value="Aire Acondicionado Split" class="mr-3 h-4 w-4 text-blue-600">
+                            <span class="font-semibold text-gray-700">Aire Acondicionado Split</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- PASO 3: Datos de Contacto -->
+                <div id="paso-3" class="step-content hidden">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Dirección de la Visita y Contacto</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Nombre Completo *</label>
+                            <input type="text" id="cliente_nombre" required class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Teléfono / WhatsApp *</label>
+                            <input type="tel" id="cliente_whatsapp" placeholder="Ej: 2281459876" required class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="col-span-1">
+                                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Ciudad *</label>
+                                <input type="text" id="cliente_ciudad" value="Azul" required class="w-full p-2.5 border border-gray-300 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed" readonly>
+                            </div>
+                            <div class="col-span-2">
+                                <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Dirección de Calle y Número *</label>
+                                <input type="text" id="cliente_direccion" required class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Detalles adicionales o falla</label>
+                            <textarea id="detalle_falla" rows="2" class="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Contanos brevemente el problema..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PASO 4: Resumen de la Solicitud -->
+                <div id="paso-4" class="step-content hidden">
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-start mb-5 text-amber-800 text-xs">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-500 text-base mr-2.5 mt-0.5"></i>
+                        <p>Verifique sus datos antes de enviar. El área técnica se comunicará para coordinar el día y horario formal del servicio.</p>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800 mb-3 text-center">Resumen de la Orden</h3>
+                    
+                    <div class="bg-gray-50 rounded-xl p-4 border border-gray-100 text-sm space-y-2.5 mb-2">
+                        <div class="flex justify-between border-b border-gray-200 pb-1.5"><span class="text-gray-500">Nº Seguimiento:</span><span class="font-bold text-blue-600" id="resumen-codigo">AC-2026-0089</span></div>
+                        <div><span class="text-gray-500 block text-xs uppercase font-bold">Solicitud</span><span class="font-medium text-gray-800" id="resumen-trabajo">-</span></div>
+                        <div><span class="text-gray-500 block text-xs uppercase font-bold">Equipo</span><span class="font-medium text-gray-800" id="resumen-equipo">-</span></div>
+                        <div><span class="text-gray-500 block text-xs uppercase font-bold">Cliente</span><span class="font-medium text-gray-800" id="resumen-nombre">-</span></div>
+                        <div><span class="text-gray-500 block text-xs uppercase font-bold">WhatsApp Contacto</span><span class="font-medium text-gray-800" id="resumen-whatsapp">-</span></div>
+                        <div><span class="text-gray-500 block text-xs uppercase font-bold">Ubicación de Visita</span><span class="font-medium text-gray-800" id="resumen-ubicacion">-</span></div>
+                        <div><span class="text-gray-500 block text-xs uppercase font-bold">Detalle del Requerimiento</span><p class="text-gray-700 italic text-xs mt-0.5 bg-white p-2 rounded border border-gray-200" id="resumen-falla">-</p></div>
+                    </div>
+                </div>
+
+                <!-- Botones de Navegación -->
+                <div class="flex justify-between mt-6 pt-4 border-t border-gray-100">
+                    <button type="button" id="btn-atras" onclick="cambiarPaso(-1)" class="px-5 py-2 rounded-xl text-gray-600 font-semibold hover:bg-gray-100 transition invisible">
+                        <i class="fa-solid fa-arrow-left mr-2"></i> Atrás
+                    </button>
+                    <button type="button" id="btn-siguiente" onclick="cambiarPaso(1)" class="bg-blue-600 text-white px-6 py-2 rounded-xl font-semibold shadow-md hover:bg-blue-700 transition">
+                        Siguiente <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                    <button type="button" id="btn-enviar" onclick="enviarWhatsApp()" class="bg-emerald-600 text-white px-5 py-2 rounded-xl font-bold shadow-md hover:bg-emerald-700 transition hidden">
+                        <i class="fa-brands fa-whatsapp text-lg mr-2"></i> Enviar a WhatsApp
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 text-xs text-center p-3 border-t border-gray-700">
+        <p><i class="fa-solid fa-location-dot text-red-500 mr-1"></i> Necochea 626, Azul, Buenos Aires</p>
+        <p class="mt-1">Oficina Central: +54 2281 66-4915</p>
+    </footer>
+
+    <script>
+        let pasoActual = 1;
+        const totalPasos = 4;
+        
+        // Generador aleatorio de código de seguimiento simulado
+        const codigoSeguimiento = "AC-2026-" + Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('resumen-codigo').innerText = codigoSeguimiento;
+
+        function cambiarPaso(direccion) {
+            // Validaciones básicas antes de avanzar al paso 4
+            if (direccion === 1 && pasoActual === 3) {
+                if (!document.getElementById('cliente_nombre').value || !document.getElementById('cliente_whatsapp').value || !document.getElementById('cliente_direccion').value) {
+                    alert("Por favor, completa todos los campos obligatorios (*) antes de continuar.");
+                    return;
+                }
+                cargarResumen();
+            }
+
+            // Ocultar paso actual
+            document.getElementById(`paso-${pasoActual}`).classList.add('hidden');
+            
+            // Calcular nuevo paso
+            pasoActual += direccion;
+
+            // Mostrar nuevo paso
+            document.getElementById(`paso-${pasoActual}`).classList.remove('hidden');
+
+            // Actualizar textos de cabecera del formulario
+            document.getElementById('step-badge').innerText = `Paso ${pasoActual} de ${totalPasos}`;
+            const titulos = ["Solicitud", "Equipo", "Contacto", "Resumen"];
+            document.getElementById('step-title').innerText = titulos[pasoActual - 1];
+
+            // Control de visibilidad de botones
+            document.getElementById('btn-atras').classList.toggle('invisible', pasoActual === 1);
+            
+            if (pasoActual === totalPasos) {
+                document.getElementById('btn-siguiente').classList.add('hidden');
+                document.getElementById('btn-enviar').classList.remove('hidden');
+            } else {
+                document.getElementById('btn-siguiente').classList.remove('hidden');
+                document.getElementById('btn-enviar').classList.add('hidden');
+            }
+        }
+
+        function cargarResumen() {
+            // Capturar valores seleccionados en los inputs
+            const trabajo = document.querySelector('input[name="tipo_trabajo"]:checked').value;
+            const equipo = document.querySelector('input[name="tipo_equipo"]:checked').value;
+            const nombre = document.getElementById('cliente_nombre').value;
+            const whatsapp = document.getElementById('cliente_whatsapp').value;
+            const direccion = document.getElementById('cliente_direccion').value;
+            const ciudad = document.getElementById('cliente_ciudad').value;
+            const falla = document.getElementById('detalle_falla').value || "No se especificaron detalles adicionales.";
+
+            // Volcar en la pantalla de resumen
+            document.getElementById('resumen-trabajo').innerText = trabajo;
+            document.getElementById('resumen-equipo').innerText = equipo;
+            document.getElementById('resumen-nombre').innerText = nombre;
+            document.getElementById('resumen-whatsapp').innerText = whatsapp;
+            document.getElementById('resumen-ubicacion').innerText = `${direccion}, ${ciudad}`;
+            document.getElementById('resumen-falla').innerText = falla;
+        }
+
+        function enviarWhatsApp() {
+            const numeroOficina = "542281664915"; // Número destino de la administración
+            
+            const codigo = document.getElementById('resumen-codigo').innerText;
+            const trabajo = document.getElementById('resumen-trabajo').innerText;
+            const equipo = document.getElementById('resumen-equipo').innerText;
+            const nombre = document.getElementById('resumen-nombre').innerText;
+            const whatsapp = document.getElementById('resumen-whatsapp').innerText;
+            const ubicacion = document.getElementById('resumen-ubicacion').innerText;
+            const falla = document.getElementById('resumen-falla').innerText;
+
+            // Construcción del texto del mensaje formateado y limpio
+            const textoMensaje = 
+`❄ *Azul Clima - Nueva Solicitud* ❄
+
+*Nº Seguimiento:* \${codigo}
+*Solicitud:* \${trabajo}
+*Equipo:* \${equipo}
+
+👤 *Cliente:* \${nombre}
+📱 *Contacto:* \${whatsapp}
+📍 *Ubicación:* \${ubicacion}
+
+📝 *Detalle del Requerimiento:*
+"\${falla}"
+
+---
+_El Área de Servicios analizará los datos ingresados para coordinar la asistencia._`;
+
+            // Codificar el texto para que sea válido dentro de una URL web
+            const mensajeCodificado = encodeURIComponent(textoMensaje);
+            
+            // Crear el link final de la API oficial de WhatsApp
+            const enlaceWhatsApp = `https://wa.me/\${numeroOficina}?text=\${mensajeCodificado}`;
+
+            // Abrir WhatsApp en una pestaña nueva automáticamente
+            window.open(enlaceWhatsApp, '_blank');
+        }
+    </script>
+</body>
+</html>
